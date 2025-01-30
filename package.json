@@ -9,5 +9,9 @@
   "author": "",
   "license": "MIT",
   "type": "commonjs",
-  "description": "RESTful API with Node.js, Express, and PostgreSQL"
+  "description": "RESTful API with Node.js, Express, and PostgreSQL",
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
+  }
 }
