@@ -1,6 +1,12 @@
 import { Pool } from "pg";
 
-const pool = new Pool({});
+const pool = new Pool({
+  user: "me",
+  host: "localhost",
+  database: "api",
+  password: "password",
+  port: 5432,
+});
 
 // GET endpoint function to get all the users from database
 export const getUsers = (request, response) => {
