@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import * as db from "./queries";
+import * as db from "./queries.js";
 
 const app = express();
 const port = 3000;
