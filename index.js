@@ -22,7 +22,7 @@ app.get("/", (request, response) => {
 app.get("/users", db.getUsers);
 
 // GET route for '/users/:id' path to retrieve single user based on id
-app.get("/user/:id", db.getUserById);
+app.get("/users/:id", db.getUserById);
 
 // POST route for '/users' path to create a new user in the database
 app.post("/users", db.createUser);
