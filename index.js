@@ -1,17 +1,40 @@
 import express from "express";
 import bodyParser from "body-parser";
 import * as db from "./queries.js";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
 
+// Middleware that parses incoming JSON data
 app.use(bodyParser.json());
 
+// Middleware that enables CORS, allowing requests from different domains.
+app.use(cors());
+
+// Middleware that parses URL-encoded data, such as handling POST requests from HTML forms.
+// eg. name=John&email=john@example.com it becomes
+// {
+//  "name":"John"
+//  "email":"john@example.com"
+// }
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
+
+// Middleware stack that will pass errors to error-handling middleware
+app.use((req, res, next) => {
+  const error = new Error("Something went wrong");
+  next(error);
+});
+
+// Error-handling Middleware
+app.use((err, req, res, next) => {
+  console.error("Error:", err.message);
+  res.status(500).send("Internal Server Error");
+});
 
 // GET route for root '/' URL
 app.get("/", (request, response) => {

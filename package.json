@@ -11,6 +11,7 @@
   "type": "module",
   "description": "RESTful API with Node.js, Express, and PostgreSQL",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.2",
     "pg": "^8.13.1"
   }
