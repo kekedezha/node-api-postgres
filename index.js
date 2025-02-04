@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import * as db from "./queries.js";
+import { isAdmin } from "./authorization.js";
 import cors from "cors";
 
 const app = express();
@@ -48,13 +49,13 @@ app.get("/users", db.getUsers);
 app.get("/users/:id", db.getUserById);
 
 // POST route for '/users' path to create a new user in the database
-app.post("/users", db.createUser);
+app.post("/users", isAdmin, db.createUser);
 
 // PUT/UPDATE route for '/users/:id' path to update a user based on id
-app.put("/users/:id", db.updateUser);
+app.put("/users/:id", isAdmin, db.updateUser);
 
 // DELETE route for '/users/:id' path to delete a user based on id
-app.delete("/users/:id", db.deleteUser);
+app.delete("/users/:id", isAdmin, db.deleteUser);
 
 // Have app start listening on specified port
 app.listen(port, () => {
