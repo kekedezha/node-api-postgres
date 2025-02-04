@@ -10,29 +10,29 @@ const pool = new Pool({
 });
 
 // GET endpoint function to get all the users from database
-export const getUsers = (request, response) => {
+export const getUsers = (request, response, next) => {
   pool.query("SELECT * FROM users ORDER BY id ASC", (error, results) => {
     if (error) {
-      throw error;
+      next(error);
     }
     response.status(200).json(results.rows);
   });
 };
 
 // GET endpoint function to get a single user by user ID
-export const getUserById = (request, response) => {
+export const getUserById = (request, response, next) => {
   const id = parseInt(request.params.id);
 
   pool.query("SELECT * FROM users WHERE id = $1", [id], (error, results) => {
     if (error) {
-      throw error;
+      next(error);
     }
     response.status(200).json(results.rows);
   });
 };
 
 // POST endpoint function to update table with a get user
-export const createUser = (request, response) => {
+export const createUser = (request, response, next) => {
   const { name, email } = request.body;
 
   pool.query(
@@ -40,7 +40,7 @@ export const createUser = (request, response) => {
     [name, email],
     (error, results) => {
       if (error) {
-        throw error;
+        next(error);
       }
       response.status(201).send(`User added with ID: ${results.rows[0].id}`);
     }
@@ -48,7 +48,7 @@ export const createUser = (request, response) => {
 };
 
 // POST endpoint function to update data for an existing user
-export const updateUser = (request, response) => {
+export const updateUser = (request, response, next) => {
   const id = parseInt(request.params.id);
   const { name, email } = request.body;
 
@@ -57,7 +57,7 @@ export const updateUser = (request, response) => {
     [name, email, id],
     (error, results) => {
       if (error) {
-        throw error;
+        next(error);
       }
       response.status(200).send(`User modified with ID: ${id}`);
     }
@@ -65,14 +65,13 @@ export const updateUser = (request, response) => {
 };
 
 // DELETE endpoint function to delete a specific user from the database
-export const deleteUser = (request, response) => {
+export const deleteUser = (request, response, next) => {
   const id = parseInt(request.params.id);
 
   pool.query("DELETE FROM users WHERE id = $1", [id], (error, results) => {
     if (error) {
-      throw error;
+      next(error);
     }
-
     response.status(200).send(`User deleted with ID: ${id}`);
   });
 };

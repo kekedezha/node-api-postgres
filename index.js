@@ -29,12 +29,6 @@ app.use(
   })
 );
 
-// Middleware stack that will pass errors to error-handling middleware
-app.use((req, res, next) => {
-  const error = new Error("Something went wrong");
-  next(error);
-});
-
 // Error-handling Middleware
 app.use((err, req, res, next) => {
   console.error("Error:", err.message);
