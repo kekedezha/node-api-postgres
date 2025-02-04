@@ -29,12 +29,6 @@ app.use(
   })
 );
 
-// Error-handling Middleware
-app.use((err, req, res, next) => {
-  console.error("Error:", err.message);
-  res.status(500).send("Internal Server Error");
-});
-
 // GET route for root '/' URL
 app.get("/", (request, response) => {
   response.json({ info: "Node.js, Express, and Postgres API" });
@@ -54,6 +48,17 @@ app.put("/users/:id", isAdmin, db.updateUser);
 
 // DELETE route for '/users/:id' path to delete a user based on id
 app.delete("/users/:id", isAdmin, db.deleteUser);
+
+// Error-handling middleware for 404 routes
+app.use((req, res, next) => {
+  res.status(404).json({ error: "Not found" });
+});
+
+// Centralized error-handling middleware
+app.use((err, req, res, next) => {
+  console.error("Error:", err.message);
+  res.status(500).send("Internal Server Error");
+});
 
 // Have app start listening on specified port
 app.listen(port, () => {
