@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import * as db from "./queries.js";
 import { isAdmin } from "./authorization.js";
 import cors from "cors";
+import helmet from "helmet";
 
 const app = express();
 const port = 3000;
@@ -12,6 +13,9 @@ app.use(bodyParser.json());
 
 // Middleware that enables CORS, allowing requests from different domains.
 app.use(cors());
+
+// Middleware that configures basic HTTP headers for security purposes.
+app.use(helmet());
 
 // Middleware that parses URL-encoded data, such as handling POST requests from HTML forms.
 // eg. name=John&email=john@example.com it becomes
